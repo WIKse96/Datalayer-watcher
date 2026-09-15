@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DataLayer Watcher</title>
+    <link rel="stylesheet" href="sidepanel.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="title-row">
+        <span class="logo">▦</span>
+        <h1>DataLayer Watcher</h1>
+      </div>
+      <div class="meta-row">
+        <span id="domain" class="domain" title="Domena aktywnej karty">—</span>
+        <span id="count" class="count">0 eventów</span>
+      </div>
+    </header>
+
+    <div class="toolbar">
+      <input
+        id="filter"
+        type="search"
+        class="filter"
+        placeholder="Filtr po nazwie eventu (np. add_to_cart)"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <button id="clear" class="btn btn-clear" title="Wyczyść historię tej karty">
+        Clear
+      </button>
+    </div>
+
+    <div class="options">
+      <label class="switch">
+        <input id="keepDomain" type="checkbox" />
+        <span>Zachowaj historię między nawigacjami w obrębie tej samej domeny</span>
+      </label>
+    </div>
+
+    <div class="legend">
+      <span class="chip chip-ecom">ecommerce GA4</span>
+      <span class="chip chip-gtm">GTM / standard</span>
+    </div>
+
+    <main id="list" class="list" aria-live="polite">
+      <div id="empty" class="empty">
+        Brak przechwyconych eventów dla tej karty.<br />
+        Odśwież stronę z GTM/dataLayer, aby zacząć nasłuch.
+      </div>
+    </main>
+
+    <template id="event-tpl">
+      <article class="event">
+        <div class="event-head">
+          <button class="event-toggle" type="button">
+            <span class="caret">▶</span>
+            <span class="event-name"></span>
+          </button>
+          <div class="event-actions">
+            <span class="event-time"></span>
+            <button class="btn btn-copy" type="button" title="Kopiuj JSON">copy</button>
+          </div>
+        </div>
+        <pre class="event-json" hidden><code></code></pre>
+      </article>
+    </template>
+
+    <script src="sidepanel.js"></script>
+  </body>
+</html>
