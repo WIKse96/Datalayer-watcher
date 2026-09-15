@@ -140,6 +140,52 @@ h1 {
   color: #fff;
 }
 
+/* Pasek akcji: zaznaczanie + eksport */
+.toolbar-actions {
+  align-items: center;
+  padding-top: 0;
+}
+.selectall {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-dim);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.selectall input {
+  accent-color: var(--accent);
+}
+.sel-count {
+  flex: 1;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+.btn-export {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.btn-export:hover {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-export:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-export:disabled:hover {
+  background: var(--bg-elev-2);
+  color: var(--accent);
+}
+.options code {
+  font-family: ui-monospace, monospace;
+  font-size: 10.5px;
+  background: var(--bg-elev-2);
+  padding: 0 3px;
+  border-radius: 3px;
+}
+
 /* Options */
 .options {
   padding: 8px 12px;
@@ -216,6 +262,16 @@ h1 {
   gap: 6px;
   padding: 6px 8px;
 }
+.event-select {
+  flex-shrink: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+  margin: 0;
+}
+.event.selected {
+  outline: 1px solid var(--accent);
+  outline-offset: -1px;
+}
 .event-toggle {
   display: flex;
   align-items: center;
@@ -245,6 +301,16 @@ h1 {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.dup-badge {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-family: ui-monospace, monospace;
 }
 .event-actions {
   display: flex;

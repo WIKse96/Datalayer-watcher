@@ -32,7 +32,26 @@
       </button>
     </div>
 
+    <div class="toolbar toolbar-actions">
+      <label class="selectall" title="Zaznacz/odznacz wszystkie widoczne">
+        <input id="selectAll" type="checkbox" />
+        <span>Zaznacz</span>
+      </label>
+      <span id="selCount" class="sel-count"></span>
+      <button id="export" class="btn btn-export" title="Eksportuj do pliku JSON">
+        Export JSON
+      </button>
+    </div>
+
     <div class="options">
+      <label class="switch">
+        <input id="dedup" type="checkbox" />
+        <span>Pokaż tylko unikalne (zwiń powtórzenia o identycznej treści)</span>
+      </label>
+      <label class="switch">
+        <input id="hideTech" type="checkbox" />
+        <span>Ukryj eventy techniczne (bez klucza <code>event</code>)</span>
+      </label>
       <label class="switch">
         <input id="keepDomain" type="checkbox" />
         <span>Zachowaj historię między nawigacjami w obrębie tej samej domeny</span>
@@ -54,9 +73,11 @@
     <template id="event-tpl">
       <article class="event">
         <div class="event-head">
+          <input class="event-select" type="checkbox" title="Zaznacz do eksportu" />
           <button class="event-toggle" type="button">
             <span class="caret">▶</span>
             <span class="event-name"></span>
+            <span class="dup-badge" hidden></span>
           </button>
           <div class="event-actions">
             <span class="event-time"></span>

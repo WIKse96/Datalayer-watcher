@@ -73,17 +73,46 @@
     }
   }
 
+  // Czy payload to zwykły obiekt zdarzenia z niepustym stringiem `event`.
+  function hasEventKey(payload) {
+    return (
+      payload &&
+      typeof payload === "object" &&
+      Object.prototype.toString.call(payload) === "[object Object]" &&
+      typeof payload.event === "string" &&
+      payload.event.length > 0
+    );
+  }
+
   function guessName(payload) {
-    if (payload && typeof payload === "object" && !Array.isArray(payload)) {
+    if (payload == null) return "(pusty push)";
+
+    var tag = Object.prototype.toString.call(payload);
+    var isArgs = tag === "[object Arguments]";
+
+    // gtag('config'|'js'|'consent'|'set'|'event', ...) trafia jako Arguments/tablica.
+    if (isArgs || Array.isArray(payload)) {
+      var arr = isArgs ? Array.prototype.slice.call(payload) : payload;
+      if (arr[0] === "event" && typeof arr[1] === "string") return arr[1];
+      if (typeof arr[0] === "string") {
+        return "gtag:" + arr[0] + (typeof arr[1] === "string" ? " " + arr[1] : "");
+      }
+      return "gtag(…)";
+    }
+
+    if (typeof payload === "object") {
       if (typeof payload.event === "string" && payload.event) return payload.event;
-      // gtag('config'/'event', ...) trafia jako arguments -> tablica
+      // Obiekty bez klucza `event` — nadaj sensowną etykietę zamiast "(no event name)".
+      var keys = Object.keys(payload);
+      if (keys.indexOf("gtm.start") !== -1) return "gtm.init";
+      if (keys.indexOf("ecommerce") !== -1) return "ecommerce (bez event)";
+      if (keys.length) {
+        return "{ " + keys.slice(0, 3).join(", ") + (keys.length > 3 ? ", …" : "") + " }";
+      }
+      return "(pusty obiekt)";
     }
-    if (Array.isArray(payload)) {
-      // np. ['event','add_to_cart',{...}] z gtag()
-      if (payload[0] === "event" && typeof payload[1] === "string") return payload[1];
-      if (typeof payload[0] === "string") return "gtag:" + payload[0];
-    }
-    return "(no event name)";
+
+    return "(" + typeof payload + ")";
   }
 
   // Synchroniczny backup do sessionStorage — ratuje eventy tuż przed unloadem.
@@ -104,6 +133,7 @@
       id: makeId(),
       page: PAGE_LOAD_ID,
       name: guessName(payload),
+      named: hasEventKey(payload), // true = ma klucz `event` (nie jest "techniczny")
       time: Date.now(),
       href: location.href,
       data: safeSerialize(payload),

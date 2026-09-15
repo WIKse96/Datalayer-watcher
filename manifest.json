@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "DataLayer Watcher",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Przechwytuje i zapisuje w czasie rzeczywistym WSZYSTKIE eventy pushowane do window.dataLayer (GTM/GA4) — także te wypychane tuż przed przeładowaniem strony (klasyczny WooCommerce add_to_cart).",
   "permissions": [
     "storage",

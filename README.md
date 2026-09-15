@@ -35,11 +35,20 @@ Dzięki temu event wypchnięty ułamek sekundy przed przeładowaniem **nie ginie
   (przeżywa restart service workera i przeładowanie strony).
 - UI jako **Chrome side panel**:
   - lista eventów, najnowsze na górze (nazwa + znacznik czasu z ms),
-  - rozwijany/zwijany pełny JSON z podświetlaniem składni,
+  - rozwijany/zwijany pełny JSON z podświetlaniem składni (otwarty event
+    **pozostaje otwarty**, gdy dojdą nowe eventy),
   - przycisk **copy JSON** przy każdym evencie,
   - **filtr** po nazwie eventu (np. `add_to_cart`),
+  - checkbox **„pokaż tylko unikalne"** — zwija powtórzenia o **identycznej
+    treści** w jeden wpis z licznikiem `×N` (różniąca się treść = osobne wpisy),
+  - checkbox **„ukryj eventy techniczne"** — chowa pushe bez klucza `event`
+    (np. `gtag('config'…)`, `gtag('consent'…)`, obiekty konfiguracyjne),
+  - **zaznaczanie** eventów + **Export JSON** (zaznaczonych albo — bez
+    zaznaczenia — wszystkich widocznych po filtrach) do pliku,
   - przycisk **Clear** czyszczący historię danej karty,
   - **badge** z licznikiem eventów na ikonie rozszerzenia.
+- Czytelne nazwy dla pushy bez klucza `event`: `gtag:js`, `gtag:config G-XXX`,
+  `gtag:consent`, `gtm.init`, albo lista kluczy `{ ecommerce, … }`.
 - Kolorystyczne rozróżnienie: **zielony** akcent dla eventów ecommerce GA4
   (`add_to_cart`, `view_item`, `purchase`, `begin_checkout`, …), **szary** dla
   standardowych eventów GTM (`gtm.js`, `gtm.dom`, `gtm.load`, `gtm.click`).
